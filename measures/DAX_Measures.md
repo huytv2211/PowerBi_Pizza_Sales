@@ -1,84 +1,73 @@
-PIZZA SALES SQL QUERIES
-A. KPI’s
-1. Total Revenue:
-SELECT SUM(total_price) AS Total_Revenue FROM pizza_sales;
-
-3. Average Order Value
-SELECT (SUM(total_price) / COUNT(DISTINCT order_id)) AS Avg_order_Value FROM pizza_sales
-
-4. Total Pizzas Sold
-SELECT SUM(quantity) AS Total_pizza_sold FROM pizza_sales
-
-5. Total Orders
-SELECT COUNT(DISTINCT order_id) AS Total_Orders FROM pizza_sales
-
-6. Average Pizzas Per Order
-SELECT CAST(CAST(SUM(quantity) AS DECIMAL(10,2)) / 
-CAST(COUNT(DISTINCT order_id) AS DECIMAL(10,2)) AS DECIMAL(10,2))
-AS Avg_Pizzas_per_order
-FROM pizza_sales
-
-B. Daily Trend for Total Orders
-SELECT DATENAME(DW, order_date) AS order_day, COUNT(DISTINCT order_id) AS total_orders 
-FROM pizza_sales
-GROUP BY DATENAME(DW, order_date)
-
-C. Monthly Trend for Orders
-select DATENAME(MONTH, order_date) as Month_Name, COUNT(DISTINCT order_id) as Total_Orders
-from pizza_sales
-GROUP BY DATENAME(MONTH, order_date)Output
-
-D. % of Sales by Pizza Category
-SELECT pizza_category, CAST(SUM(total_price) AS DECIMAL(10,2)) as total_revenue,
-CAST(SUM(total_price) * 100 / (SELECT SUM(total_price) from pizza_sales) AS DECIMAL(10,2)) AS PCT
-FROM pizza_sales
-GROUP BY pizza_category
-
-E. % of Sales by Pizza Size
-SELECT pizza_size, CAST(SUM(total_price) AS DECIMAL(10,2)) as total_revenue,
-CAST(SUM(total_price) * 100 / (SELECT SUM(total_price) from pizza_sales) AS DECIMAL(10,2)) AS PCT
-FROM pizza_sales
-GROUP BY pizza_size
-ORDER BY pizza_size
-
-F. Total Pizzas Sold by Pizza Category
-SELECT pizza_category, SUM(quantity) as Total_Quantity_Sold
-FROM pizza_sales
-WHERE MONTH(order_date) = 2
-GROUP BY pizza_category
-ORDER BY Total_Quantity_Sold DESC
-
-G. Top 5 Pizzas by Revenue
-SELECT Top 5 pizza_name, SUM(total_price) AS Total_Revenue
-FROM pizza_sales
-GROUP BY pizza_name
-ORDER BY Total_Revenue DESC
-
-H. Bottom 5 Pizzas by Revenue
-SELECT Top 5 pizza_name, SUM(total_price) AS Total_Revenue
-FROM pizza_sales
-GROUP BY pizza_name
-ORDER BY Total_Revenue ASC
-
-I. Top 5 Pizzas by Quantity
-SELECT Top 5 pizza_name, SUM(quantity) AS Total_Pizza_Sold
-FROM pizza_sales
-GROUP BY pizza_name
-ORDER BY Total_Pizza_Sold DESC
-
-J. Bottom 5 Pizzas by Quantity
-SELECT TOP 5 pizza_name, SUM(quantity) AS Total_Pizza_Sold
-FROM pizza_sales
-GROUP BY pizza_name
-ORDER BY Total_Pizza_Sold ASC
-
+Copilotmaymakemistakes 1
+PizzaSalesSQLQueries
+PizzaSalesSQLQueries
+A.KPI’s--1.TotalRevenue
+SELECTSUM(total_price)ASTotal_RevenueFROMpizza_sales;--3.AverageOrderValue
+SELECT(SUM(total_price)/COUNT(DISTINCTorder_id))ASAvg_order_ValueFROMpizza_sales;--5.TotalPizzasSold
+SELECTSUM(quantity)ASTotal_pizza_soldFROMpizza_sales;--7.TotalOrders
+SELECTCOUNT(DISTINCTorder_id)ASTotal_OrdersFROMpizza_sales;--9.AveragePizzasPerOrder
+SELECTCAST(CAST(SUM(quantity)ASDECIMAL(10,2))/
+CAST(COUNT(DISTINCTorder_id)ASDECIMAL(10,2))ASDECIMAL(10,2))AS
+Avg_Pizzas_per_order
+FROMpizza_sales;
+B.DailyTrendforTotalOrders
+SELECTDATENAME(DW,order_date)ASorder_day,COUNT(DISTINCTorder_id)AStotal_orders
+FROMpizza_sales
+GROUPBYDATENAME(DW,order_date);
+C.MonthlyTrendforOrders
+SELECTDATENAME(MONTH,order_date)ASMonth_Name,COUNT(DISTINCTorder_id)AS
+Total_Orders
+FROMpizza_sales
+GROUPBYDATENAME(MONTH,order_date);
+D.%ofSalesbyPizzaCategory
+SELECTpizza_category,CAST(SUM(total_price)ASDECIMAL(10,2))AStotal_revenue,
+CAST(SUM(total_price)*100/(SELECTSUM(total_price)FROMpizza_sales)ASDECIMAL(10,2))
+ASPCT
+FROMpizza_sales
+GROUPBYpizza_category;
+Copilotmaymakemistakes 2
+E.%ofSalesbyPizzaSize
+SELECTpizza_size,CAST(SUM(total_price)ASDECIMAL(10,2))AStotal_revenue,
+CAST(SUM(total_price)*100/(SELECTSUM(total_price)FROMpizza_sales)ASDECIMAL(10,2))
+ASPCT
+FROMpizza_sales
+GROUPBYpizza_size
+ORDERBYpizza_size;
+F.TotalPizzasSoldbyPizzaCategory(February)
+SELECTpizza_category,SUM(quantity)ASTotal_Quantity_Sold
+FROMpizza_sales
+WHEREMONTH(order_date)=2
+GROUPBYpizza_category
+ORDERBYTotal_Quantity_SoldDESC;
+G.Top5PizzasbyRevenue
+SELECTTOP5pizza_name,SUM(total_price)ASTotal_Revenue
+FROMpizza_sales
+GROUPBYpizza_name
+ORDERBYTotal_RevenueDESC;
+H.Bottom5PizzasbyRevenue
+SELECTTOP5pizza_name,SUM(total_price)ASTotal_Revenue
+FROMpizza_sales
+GROUPBYpizza_name
+ORDERBYTotal_RevenueASC;
+I.Top5PizzasbyQuantity
+SELECTTOP5pizza_name,SUM(quantity)ASTotal_Pizza_Sold
+FROMpizza_sales
+GROUPBYpizza_name
+ORDERBYTotal_Pizza_SoldDESC;
+J.Bottom5PizzasbyQuantity
+SELECTTOP5pizza_name,SUM(quantity)ASTotal_Pizza_Sold
+FROMpizza_sales
+GROUPBYpizza_name
+ORDERBYTotal_Pizza_SoldASC;
 K. Top 5 Pizzas by Total Orders
-SELECT Top 5 pizza_name, COUNT(DISTINCT order_id) AS Total_Orders
-FROM pizza_sales
-GROUP BY pizza_name
-ORDER BY Total_Orders DESC
-L. Borrom 5 Pizzas by Total Orders
-SELECT Top 5 pizza_name, COUNT(DISTINCT order_id) AS Total_Orders
-FROM pizza_sales
-GROUP BY pizza_name
-ORDER BY Total_Orders ASC
+SELECT TOP 5 pizza_name, COUNT(DISTINCT order_id) AS Total_Orders
+FROMpizza_sales
+GROUPBYpizza_name
+ORDERBYTotal_Orders DESC;
+L. Bottom 5 Pizzas by Total Orders
+SELECT TOP 5 pizza_name, COUNT(DISTINCT order_id) AS Total_Orders
+FROMpizza_sales
+GROUPBYpizza_name
+ORDERBYTotal_Orders ASC;
+3
+Copilot may make mistakes
